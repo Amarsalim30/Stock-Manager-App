@@ -1,0 +1,877 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stock Manager - Screen Designs</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Roboto', Arial, sans-serif;
+            background: #f5f5f5;
+            color: #333;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .screen-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        .screen {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            overflow: hidden;
+            transition: transform 0.3s ease;
+        }
+
+        .screen:hover {
+            transform: translateY(-5px);
+        }
+
+        .screen-header {
+            background: #1976D2;
+            color: white;
+            padding: 15px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .screen-title {
+            font-size: 18px;
+            font-weight: 500;
+        }
+
+        .screen-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .action-btn {
+            background: rgba(255,255,255,0.2);
+            border: none;
+            color: white;
+            padding: 8px 12px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: background 0.3s ease;
+        }
+
+        .action-btn:hover {
+            background: rgba(255,255,255,0.3);
+        }
+
+        .screen-body {
+            padding: 20px;
+            min-height: 500px;
+        }
+
+        .alert-banner {
+            background: #ffebee;
+            border-left: 4px solid #f44336;
+            padding: 12px 16px;
+            margin-bottom: 20px;
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .alert-banner.warning {
+            background: #fff3e0;
+            border-left-color: #ff9800;
+        }
+
+        .summary-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+
+        .summary-card {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            border: 1px solid #e0e0e0;
+            text-align: center;
+            transition: box-shadow 0.3s ease;
+        }
+
+        .summary-card:hover {
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .summary-card h3 {
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 8px;
+        }
+
+        .summary-card .value {
+            font-size: 24px;
+            font-weight: bold;
+            color: #1976D2;
+        }
+
+        .filter-chips {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .filter-chip {
+            background: #e3f2fd;
+            border: 1px solid #2196F3;
+            border-radius: 20px;
+            padding: 8px 16px;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .filter-chip.active {
+            background: #2196F3;
+            color: white;
+        }
+
+        .filter-chip:hover {
+            background: #2196F3;
+            color: white;
+        }
+
+        .product-list {
+            max-height: 300px;
+            overflow-y: auto;
+        }
+
+        .product-item {
+            display: flex;
+            align-items: center;
+            padding: 15px;
+            border-bottom: 1px solid #e0e0e0;
+            transition: background 0.3s ease;
+        }
+
+        .product-item:hover {
+            background: #f8f9fa;
+        }
+
+        .product-status {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            margin-right: 15px;
+        }
+
+        .product-status.good {
+            background: #4caf50;
+        }
+
+        .product-status.low {
+            background: #f44336;
+        }
+
+        .product-status.warning {
+            background: #ff9800;
+        }
+
+        .product-info {
+            flex: 1;
+        }
+
+        .product-name {
+            font-weight: 500;
+            margin-bottom: 4px;
+        }
+
+        .product-details {
+            font-size: 14px;
+            color: #666;
+        }
+
+        .product-actions {
+            display: flex;
+            gap: 8px;
+        }
+
+        .btn {
+            padding: 8px 16px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary {
+            background: #1976D2;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #1565C0;
+        }
+
+        .btn-secondary {
+            background: #e0e0e0;
+            color: #333;
+        }
+
+        .btn-secondary:hover {
+            background: #d0d0d0;
+        }
+
+        .fab {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 56px;
+            height: 56px;
+            background: #1976D2;
+            border: none;
+            border-radius: 50%;
+            color: white;
+            font-size: 24px;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+            transition: all 0.3s ease;
+        }
+
+        .fab:hover {
+            background: #1565C0;
+            transform: scale(1.1);
+        }
+
+        .modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .modal-content {
+            background: white;
+            border-radius: 12px;
+            padding: 30px;
+            max-width: 500px;
+            width: 90%;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .modal-title {
+            font-size: 20px;
+            font-weight: 600;
+        }
+
+        .close-btn {
+            background: none;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            color: #666;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: #333;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-size: 16px;
+            transition: border-color 0.3s ease;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: #1976D2;
+            box-shadow: 0 0 0 3px rgba(25, 118, 210, 0.1);
+        }
+
+        .quick-buttons {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-bottom: 15px;
+        }
+
+        .quick-btn {
+            background: #e3f2fd;
+            border: 1px solid #2196F3;
+            border-radius: 20px;
+            padding: 6px 12px;
+            font-size: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .quick-btn:hover {
+            background: #2196F3;
+            color: white;
+        }
+
+        .scanner-view {
+            background: #000;
+            height: 200px;
+            border-radius: 8px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            font-size: 16px;
+            margin-bottom: 20px;
+            position: relative;
+        }
+
+        .scanner-overlay {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 200px;
+            height: 100px;
+            border: 2px solid #4caf50;
+            border-radius: 8px;
+        }
+
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        .data-table th,
+        .data-table td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .data-table th {
+            background: #f5f5f5;
+            font-weight: 600;
+        }
+
+        .data-table tr:hover {
+            background: #f8f9fa;
+        }
+
+        .chart-container {
+            background: white;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+            border: 1px solid #e0e0e0;
+        }
+
+        .export-actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .status-badge {
+            padding: 4px 8px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 500;
+        }
+
+        .status-badge.good {
+            background: #e8f5e8;
+            color: #2e7d32;
+        }
+
+        .status-badge.low {
+            background: #ffebee;
+            color: #c62828;
+        }
+
+        .status-badge.warning {
+            background: #fff3e0;
+            color: #ef6c00;
+        }
+
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: white;
+            border-top: 1px solid #e0e0e0;
+            display: flex;
+            justify-content: space-around;
+            padding: 10px 0;
+        }
+
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+            color: #666;
+            text-decoration: none;
+            font-size: 12px;
+            transition: color 0.3s ease;
+        }
+
+        .nav-item.active {
+            color: #1976D2;
+        }
+
+        .nav-item:hover {
+            color: #1976D2;
+        }
+
+        @media (max-width: 400px) {
+            .screen-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .summary-cards {
+                grid-template-columns: 1fr;
+            }
+            
+            .filter-chips {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 style="text-align: center; margin-bottom: 30px; color: #1976D2;">Stock Manager - Screen Designs</h1>
+        
+        <div class="screen-grid">
+            <!-- 1. Home Dashboard -->
+            <div class="screen">
+                <div class="screen-header">
+                    <div class="screen-title">Stock Manager</div>
+                    <div class="screen-actions">
+                        <button class="action-btn">🇬🇧 EN</button>
+                        <button class="action-btn">🌐 Online</button>
+                    </div>
+                </div>
+                <div class="screen-body">
+                    <div class="alert-banner">
+                        <span style="color: #f44336;">⚠️</span>
+                        <span>3 items low on stock!</span>
+                        <button class="btn btn-secondary" style="margin-left: auto;">View</button>
+                    </div>
+                    
+                    <div class="summary-cards">
+                        <div class="summary-card">
+                            <h3>Total Products</h3>
+                            <div class="value">47</div>
+                        </div>
+                        <div class="summary-card">
+                            <h3>Low Stock</h3>
+                            <div class="value" style="color: #f44336;">3</div>
+                        </div>
+                        <div class="summary-card">
+                            <h3>Stock Value</h3>
+                            <div class="value">KES 45,230</div>
+                        </div>
+                    </div>
+
+                    <div class="filter-chips">
+                        <div class="filter-chip active">All</div>
+                        <div class="filter-chip">Low Stock (3)</div>
+                        <div class="filter-chip">Expiring (2)</div>
+                        <div class="filter-chip">Beverages</div>
+                    </div>
+
+                    <div class="product-list">
+                        <div class="product-item">
+                            <div class="product-status good"></div>
+                            <div class="product-info">
+                                <div class="product-name">Coca Cola 500ml</div>
+                                <div class="product-details">Beverages | Stock: 24</div>
+                            </div>
+                            <div class="product-actions">
+                                <button class="btn btn-primary">+/-</button>
+                                <button class="btn btn-secondary">Edit</button>
+                            </div>
+                        </div>
+                        <div class="product-item">
+                            <div class="product-status low"></div>
+                            <div class="product-info">
+                                <div class="product-name">Bread (White)</div>
+                                <div class="product-details">Bakery | Stock: 5</div>
+                            </div>
+                            <div class="product-actions">
+                                <button class="btn btn-primary">+/-</button>
+                                <button class="btn btn-secondary">Edit</button>
+                            </div>
+                        </div>
+                        <div class="product-item">
+                            <div class="product-status warning"></div>
+                            <div class="product-info">
+                                <div class="product-name">Milk (Fresh)</div>
+                                <div class="product-details">Dairy | Stock: 12 | Expires: 2 days</div>
+                            </div>
+                            <div class="product-actions">
+                                <button class="btn btn-primary">+/-</button>
+                                <button class="btn btn-secondary">Edit</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 2. Add Product Modal -->
+            <div class="screen">
+                <div class="screen-header">
+                    <div class="screen-title">Add Product</div>
+                    <div class="screen-actions">
+                        <button class="action-btn">×</button>
+                    </div>
+                </div>
+                <div class="screen-body">
+                    <div class="form-group">
+                        <label class="form-label">Product Name</label>
+                        <input type="text" class="form-input" placeholder="Enter product name">
+                        <div class="quick-buttons">
+                            <button class="quick-btn">Coca Cola</button>
+                            <button class="quick-btn">Bread</button>
+                            <button class="quick-btn">Milk</button>
+                            <button class="quick-btn">Rice</button>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Category</label>
+                        <select class="form-input">
+                            <option>Select category</option>
+                            <option>Beverages</option>
+                            <option>Bakery</option>
+                            <option>Dairy</option>
+                            <option>Cleaning</option>
+                            <option>Snacks</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Quantity</label>
+                        <input type="number" class="form-input" placeholder="0">
+                        <div class="quick-buttons">
+                            <button class="quick-btn">+10</button>
+                            <button class="quick-btn">+25</button>
+                            <button class="quick-btn">+50</button>
+                            <button class="quick-btn">+100</button>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Unit Price (KES)</label>
+                        <input type="number" class="form-input" placeholder="0.00">
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Low Stock Alert</label>
+                        <input type="number" class="form-input" value="10">
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Expiry Date (Optional)</label>
+                        <input type="date" class="form-input">
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Barcode</label>
+                        <div style="display: flex; gap: 10px;">
+                            <input type="text" class="form-input" placeholder="Scan or enter barcode">
+                            <button class="btn btn-secondary">📷 Scan</button>
+                        </div>
+                    </div>
+
+                    <div style="display: flex; gap: 10px; margin-top: 30px;">
+                        <button class="btn btn-secondary" style="flex: 1;">Cancel</button>
+                        <button class="btn btn-primary" style="flex: 1;">Add Product</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 3. Stock Adjustment -->
+            <div class="screen">
+                <div class="screen-header">
+                    <div class="screen-title">Stock Adjustment</div>
+                    <div class="screen-actions">
+                        <button class="action-btn">📷</button>
+                    </div>
+                </div>
+                <div class="screen-body">
+                    <div class="form-group">
+                        <label class="form-label">Search Product</label>
+                        <input type="text" class="form-input" placeholder="Search by name or scan barcode">
+                    </div>
+
+                    <div class="scanner-view">
+                        <div class="scanner-overlay"></div>
+                        <div>Point camera at barcode or search above</div>
+                    </div>
+
+                    <div class="product-item" style="background: #e3f2fd; border-radius: 8px; margin-bottom: 20px;">
+                        <div class="product-status good"></div>
+                        <div class="product-info">
+                            <div class="product-name">Coca Cola 500ml</div>
+                            <div class="product-details">Current Stock: 24 | Price: KES 80</div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Quantity Change</label>
+                        <input type="number" class="form-input" placeholder="Enter +/- quantity">
+                        <div class="quick-buttons">
+                            <button class="quick-btn">+5</button>
+                            <button class="quick-btn">+10</button>
+                            <button class="quick-btn">+25</button>
+                            <button class="quick-btn">-5</button>
+                            <button class="quick-btn">-10</button>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Reason</label>
+                        <select class="form-input">
+                            <option>Select reason</option>
+                            <option>Purchase</option>
+                            <option>Sale</option>
+                            <option>Damaged</option>
+                            <option>Expired</option>
+                            <option>Return</option>
+                            <option>Other</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Notes (Optional)</label>
+                        <textarea class="form-input" rows="3" placeholder="Add notes about this adjustment"></textarea>
+                    </div>
+
+                    <div style="display: flex; gap: 10px; margin-top: 30px;">
+                        <button class="btn btn-secondary" style="flex: 1;">Cancel</button>
+                        <button class="btn btn-primary" style="flex: 1;">Save Changes</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 4. Reports Screen -->
+            <div class="screen">
+                <div class="screen-header">
+                    <div class="screen-title">Reports</div>
+                    <div class="screen-actions">
+                        <button class="action-btn">📅</button>
+                        <button class="action-btn">📊</button>
+                    </div>
+                </div>
+                <div class="screen-body">
+                    <div class="filter-chips">
+                        <div class="filter-chip active">Today</div>
+                        <div class="filter-chip">This Week</div>
+                        <div class="filter-chip">This Month</div>
+                        <div class="filter-chip">Custom Range</div>
+                    </div>
+
+                    <div class="summary-cards">
+                        <div class="summary-card">
+                            <h3>Stock In</h3>
+                            <div class="value" style="color: #4caf50;">127</div>
+                        </div>
+                        <div class="summary-card">
+                            <h3>Stock Out</h3>
+                            <div class="value" style="color: #f44336;">89</div>
+                        </div>
+                        <div class="summary-card">
+                            <h3>Total Value</h3>
+                            <div class="value">KES 15,460</div>
+                        </div>
+                    </div>
+
+                    <div class="chart-container">
+                        <h3 style="margin-bottom: 15px;">Stock Movement</h3>
+                        <canvas id="stockChart" width="300" height="150" style="width: 100%; height: 150px; background: #f8f9fa; border-radius: 4px;"></canvas>
+                    </div>
+
+                    <h3 style="margin-bottom: 15px;">Recent Transactions</h3>
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Product</th>
+                                <th>Change</th>
+                                <th>Reason</th>
+                                <th>Date</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Coca Cola 500ml</td>
+                                <td style="color: #4caf50;">+24</td>
+                                <td>Purchase</td>
+                                <td>Today 2:30 PM</td>
+                            </tr>
+                            <tr>
+                                <td>Bread (White)</td>
+                                <td style="color: #f44336;">-12</td>
+                                <td>Sale</td>
+                                <td>Today 1:15 PM</td>
+                            </tr>
+                            <tr>
+                                <td>Milk (Fresh)</td>
+                                <td style="color: #f44336;">-3</td>
+                                <td>Expired</td>
+                                <td>Today 9:00 AM</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <div class="export-actions">
+                        <button class="btn btn-primary">📄 Export PDF</button>
+                        <button class="btn btn-secondary">📊 Export Excel</button>
+                        <button class="btn btn-secondary">📱 Share</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 5. Barcode Scanner -->
+            <div class="screen">
+                <div class="screen-header">
+                    <div class="screen-title">Barcode Scanner</div>
+                    <div class="screen-actions">
+                        <button class="action-btn">💡</button>
+                        <button class="action-btn">×</button>
+                    </div>
+                </div>
+                <div class="screen-body">
+                    <div class="scanner-view" style="height: 300px; background: linear-gradient(45deg, #1976D2, #2196F3);">
+                        <div class="scanner-overlay" style="border-color: #4caf50; border-width: 3px;"></div>
+                        <div style="position: absolute; bottom: 20px; color: white; text-align: center;">
+                            Point camera at barcode
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Or enter barcode manually</label>
+                        <input type="text" class="form-input" placeholder="Enter barcode number">
+                    </div>
+
+                    <div style="text-align: center; margin: 20px 0;">
+                        <div style="background: #e8f5e8; padding: 15px; border-radius: 8px; display: inline-block;">
+                            <span style="color: #2e7d32; font-weight: 500;">✓ Barcode detected: 123456789012</span>
+                        </div>
+                    </div>
+
+                    <div class="product-item" style="background: #e3f2fd; border-radius: 8px;">
+                        <div class="product-status good"></div>
+                        <div class="product-info">
+                            <div class="product-name">Coca Cola 500ml</div>
+                            <div class="product-details">Found in inventory | Current Stock: 24</div>
+                        </div>
+                    </div>
+
+                    <div style="display: flex; gap: 10px; margin-top: 30px;">
+                        <button class="btn btn-secondary" style="flex: 1;">Cancel</button>
+                        <button class="btn btn-primary" style="flex: 1;">Select Product</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 6. Product Details/Edit -->
+            <div class="screen">
+                <div class="screen-header">
+                    <div class="screen-title">Product Details</div>
+                    <div class="screen-actions">
+                        <button class="action-btn">✏️</button>
+                        <button class="action-btn">🗑️</button>
+                    </div>
+                </div>
+                <div class="screen-body">
+                    <div style="text-align: center; margin-bottom: 30px;">
+                        <div style="width: 80px; height: 80px; background: #e3f2fd; border-radius: 40px; margin: 0 auto 15px; display: flex; align-items: center; justify-content: center; font-size: 30px;">
+                            🥤
+                        </div>
+                        <h2 style="margin-bottom: 5px;">Coca Cola 500ml</h2>
+                        <span class="status-badge good">In Stock</span>
+                    </div>
+
+                    <div style="background: #f8f9fa; padding: 20px; border-radius: 8px; margin-bottom: 20px;">
+                        <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px;">
+                            <div>
+                                <strong>Current Stock:</strong><br>
+                                <span style="font-size: 24px; color: #1976D2;">24</span>
+                            </div>
+                            <div>
+                                <strong>Unit Price:</strong><br>
+                                <span style="font-size: 24px; color: #1976D2;">KES 80</span>
+                            </div>
+                            <div>
+                                <strong>Category:</strong><br>
+                                Beverages
+                            </div>
+                            <div>
+                                <strong>Low Stock Alert:</strong><br>
+                                10 units
+                            </div>
+                        </div>
+                    </div>
+
+                    <div style="margin-bottom: 20px;">
+                        <strong>Barcode:</strong> 123456789012<br>
+                        <strong>Added:</strong> Jan 15, 2024<br>
+                        <strong>Last Updated:</strong> Today 2:30 PM
+                    </div>
+
+                    <h3 style="margin-bottom: 15px;">Recent Activity</h3>
+                    <div class="product-list">
+                        <div class="product-item">
+                            <div style="color: #4caf50; font-weight: bold;">+24</div>
+                            <div class="product-info">
+                                <div class="product-name">Stock Purchase</div>
+                                <div class="product-details">Today 2:30 PM</div>
+                            </div>
+                        </div>
+                        <div class="product-item">
+                            <div style="color: #f44336; font-weight: bold;">-12</div>
+                            <div class="product-info">
+                                <div class="product-name">Sale</div>
+                                <div class="product-details">Today 1:
